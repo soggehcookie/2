@@ -1,5 +1,4 @@
 from Additional_Exceptions import InsufficientFunds
-import Customer
 
 class Account:
     def __init__(self, acct_type, owner, balance = 0):
@@ -50,9 +49,8 @@ class Account:
 class Savings_Account(Account):
     def __init__(self, acc_num, owner, type = "Savings"):
         self.__acc_num = acc_num
-        self.type = type
-        self.owner = owner
-        super().__init__(self.type, self.owner)
+        self._Account__owner = owner
+        self._acct_type = type 
 
     def get_acc_num(self):
         return self.__acc_num
@@ -60,8 +58,8 @@ class Savings_Account(Account):
 class Current_Account(Account):
     def __init__(self, acc_num, owner, type = "Current"):
         self.__acc_num = acc_num
-        self.type = type
-        super().__init__(type, owner)
+        self._Account__owner = owner
+        self._acct_type = type
 
     def get_acc_num(self):
         return self.__acc_num   

@@ -1,5 +1,6 @@
 import Customer
 import random
+import ATM_Card
 from Additional_Exceptions import InvalidPinNumber, AccountNotFound
 
 class Bank:
@@ -21,8 +22,9 @@ class Bank:
         person_dict = dict(zip(person_key, person_value))
         self.customer_list.append(person_dict)
 
-    #def manages():
+    def manages(self, atm_card):
     #accepts an atm_card object and stores it in the list of atm cards.
+        self.card_list.append(atm_card)
 
     #def maintains(self):
     #accepts an ATM object and stores it in the list of ATMs.

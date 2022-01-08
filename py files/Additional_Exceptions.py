@@ -33,3 +33,6 @@ class InvalidPinNumber(Exception):
 
 class AccountNotFound(Exception):
     pass
+
+class InvalidAccount(Exception):
+    pass
