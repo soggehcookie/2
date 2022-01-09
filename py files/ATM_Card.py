@@ -1,5 +1,7 @@
 class ATM_Card:
     def __init__(self, card_num, owned_by):
+#   card number - private variable, the ATM card's number
+#   owned by - private variable, a Customer object
         self.__card_num = card_num
         self.__owned_by = owned_by
 
@@ -9,7 +11,9 @@ class ATM_Card:
 
     def access(self, input_acct_type):
 #   accepts an account type and returns the Account object of the customer
-        return input_acct_type.get_type
+        for i in self.__owned_by.get_acct_list:
+            if input_acct_type in i:
+                return i
 
     def __str__(self):
 #   returns a string representation of the ATM card detailing the card's number and owner's name.

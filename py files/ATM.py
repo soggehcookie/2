@@ -1,6 +1,6 @@
-import ATM_Card
+import Bank
 from ATM_Transaction import Withdrawl, Transfer
-from Additional_Exceptions import InvalidAccount
+from Additional_Exceptions import InvalidAccount, InvalidATMCard
 
 class ATM:
     def __init__(self, atm_location, managed_by, current_card = None):
@@ -20,17 +20,47 @@ class ATM:
 #   which has a default value of None via input parameters. Process the requested
 #   transaction according to the transaction type. Returns the status of the respective
 #   transactions or raises an exception indicating whether or not the transactions were successful.
-        if acct_type in ATM_Card.get_acct_types:
-            if transaction_type == "withdrawl":
-                Withdrawl.withdrawl(amount)
-                return Withdrawl.update(amount)
-            elif transaction_type == "transfer":
-                for accts in self.__current_card.get_acct_list:
-                    if  xfer_acct_num is not accts:
-                        Transfer.update(amount)
-                        return Transfer.update(amount)
-                    else:
-                        raise InvalidAccount()
+        if acct_type in self.__current_card.get_acct_types:
+            self.user_obj = self.__current_card.access(acct_type)
+        if transaction_type == "withdraw":
+            try:
+                Withdrawl.update(self.user_obj, amount)
+                return Withdrawl.withdrawl(self.user_obj)
+            except:
+                print(f"Withdrawl not successful")
+
+        elif transaction_type == "transfer":
+            xfer_obj = self.managed_by.get_acct(xfer_acct_num)
+            if self.user_obj.get_acct_num is not xfer_acct_num:
+                Transfer.update(self.user_obj, amount, xfer_obj)
+            else:
+                raise InvalidAccount()
 
     def check_accts(self):
 #   checks if the user has 1 or 2 accounts. Returns True if there is 2 otherwise returns False.
+        for i in self.__current_card.get_acct_types:
+            if i > 1:
+                return True
+            else:
+                return False 
+
+    def check_pin(self, input_pin_num):
+#   accepts a user's pin number and checks with the bank if it is valid. 
+#   Returns the status of the check from the bank.
+        return self.managed_by.authorize_pin(self.user_obj, input_pin_num)
+
+    def check_card(self, input_card_num):
+#   accepts a ATM card number and checks with the bank if the card is a valid card.
+#   If it is valid, the current card attribute is set to this ATM card object and returns True
+#   but if the card is invalid, raise an InvalidATMCard exception.
+        for l in self.managed_by.get_card_list():
+            if input_card_num == l.get_card_num():
+                self.__current_card = l
+                return True
+            else:
+                raise InvalidATMCard()
+
+    def show_balance(self, acct_type):
+#   accepts an Account type and 
+#   returns a string message detailing the current balance of the requested account of that customer
+        return f" Your {acct_type} account has a balance of {self.user_obj.check_balance()}"

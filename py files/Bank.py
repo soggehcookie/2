@@ -1,10 +1,14 @@
 import Customer
 import random
-import ATM_Card
 from Additional_Exceptions import InvalidPinNumber, AccountNotFound
 
 class Bank:
     def __init__(self, code, address, atm_list = [], customer_list = [], card_list = []):
+#   code - private variable, a bank code
+#   address - private variable, bank's address
+#   list of ATM - a list of ATM objects
+#   list of customers - a list of Customer records
+#   list of atm cards - a list of ATM_card objects
         self.__code = code
         self.__address = address
         self.atm_list = atm_list
@@ -26,8 +30,9 @@ class Bank:
     #accepts an atm_card object and stores it in the list of atm cards.
         self.card_list.append(atm_card)
 
-    #def maintains(self):
+    def maintains(self, atm):
     #accepts an ATM object and stores it in the list of ATMs.
+        self.atm_list.append(atm)
 
     def authorize_pin(self, customer, input_pin):
     #accepts a customer's object and pin number as input parameters,
@@ -48,3 +53,6 @@ class Bank:
                 return info
             else:
                 raise AccountNotFound()
+
+    def get_card_list(self):
+        return self.card_list

@@ -32,19 +32,13 @@ class Withdrawl(ATM_Transaction):
 #   Returns the status of the update() function.
         if withdrawl_account in Customer.get_acct_list:
             self.update(withdrawl_account)
-        if self.update() == True:
-            return f"Update successful"
+        return f"Your {withdrawl_account.get_type} has a balance of {withdrawl_account.check_balance}"
         
     def update(self):
 #   function that updates the customer's Account object with the funds to be withdrawn.
 #   Returns the status of the transaction.
-        super.update()
-        counter = 0
-        if counter < 1:
             self.account.debit = self._amount
-            counter += 1
-        if counter == 1:
-            return f"Transaction successful"
+            return f"Card Returned"
 
 class Transfer(ATM_Transaction):
     def __init__(self, amount, date, transaction_type = "transfer"):
@@ -57,11 +51,8 @@ class Transfer(ATM_Transaction):
     def update(self):
 #   function that updates the customer's Account object with funds for the transfer process.
 #   Returns True if successful.
-        super().update()
-        count = 0
         if self.xfer_acct in Customer.get_acct_list:
-            if count < 1:
-                self.xfer_acct.credit = self._amount
-                count += 1
-        if count == 1:
-            return f"Transfer successful"
+            if self.account.get_acct_num is not self.xfer_acct.get_acct_num:
+                self.account.debit = self.amount
+                return True
+

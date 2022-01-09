@@ -28,6 +28,9 @@ class InsufficientFunds(Exception):
         return f"{self.msg}"
     # pass
 
+class InvalidATMCard(Exception):
+    pass
+
 class InvalidPinNumber(Exception):
     pass
 
