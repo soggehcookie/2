@@ -3,13 +3,13 @@ from abc import ABC, abstractmethod
 
 class ATM_Transaction(ABC):
 
-    def __init__(self, transaction_type, date = datetime.datetime.now(), transaction_id = 0, amount = 0):
+    def __init__(self, transaction_type, amount = 0):
         self._transaction_type = transaction_type
-        self.transaction_id = transaction_id
-        self.date = date
+        self.transaction_id = 0
+        self.date = datetime.datetime.now()
         self._amount = amount
 
-        transaction_id += 1
+        self.transaction_id += 1
 
     @abstractmethod
     def update(self, account, amount, xfer_acct = None):
@@ -21,15 +21,15 @@ class ATM_Transaction(ABC):
         self.xfer_acct = xfer_acct
 
 class Withdrawl(ATM_Transaction):
-    def __init__(self, amount, date, transaction_type = "withdrawl"):
-        super().__init__(amount, date)
+    def __init__(self, amount, transaction_type = "withdrawl"):
+        super().__init__(amount)
         self.transaction_type = transaction_type
 
     def withdrawl(self, withdrawl_account):
 #   accepts an Account object and calls the update() function with the appropriate parameters.
 #   Returns the status of the update() function.
-        if withdrawl_account in withdrawl_account.get_owner.get_acct_list:
-            self.update(withdrawl_account, self._amount)
+        if withdrawl_account in withdrawl_account.get_owner().get_acct_list():
+            return self.update()
 
         
     def update(self):
@@ -38,11 +38,11 @@ class Withdrawl(ATM_Transaction):
         return self.account.debit(self._amount)
 
 class Transfer(ATM_Transaction):
-    def __init__(self, amount, date, transaction_type = "transfer"):
+    def __init__(self, amount, transaction_type = "transfer"):
 #   constructor that initializes the transaction's date & time (timestamp) by using
 #   one of the datatime functions and transaction type set to 'transfer' . The attribute
 #   amount via input parameters
-        super().__init__(amount, date)
+        super().__init__(amount)
         self.transaction_type = transaction_type
 
     def update(self):

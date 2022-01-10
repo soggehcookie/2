@@ -23,7 +23,7 @@ class ATM:
         self.user_obj = self.__current_card.access(acct_type)
         if transaction_type == "withdraw":
             # try:
-            return self.user_obj.Withdrawl(amount).withdrawl(self.user_obj)
+            return Withdrawl(amount).withdrawl(self.user_obj)
             # except:
             #     print(f"Withdrawl not successful")
 
