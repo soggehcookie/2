@@ -1,4 +1,3 @@
-import Customer
 import random
 from Additional_Exceptions import InvalidPinNumber, AccountNotFound
 
@@ -16,11 +15,12 @@ class Bank:
         self.card_list = card_list
 
     def add_customer(self, customer, cust_pin):
-        cust_id = customer.get_name() + str(random.randint(0000, 9999))
-        cust_obj = customer
-        keyname_id = customer.get_name() + "_id"
-        keyname_obj = customer.get_name() + "_obj"
-        keyname_pin = customer.get_name() + "_pin"
+        self.customer = customer
+        cust_id = self.customer.get_name() + str(random.randint(0000, 9999))
+        cust_obj = self.customer
+        keyname_id = self.customer.get_name() + "_id"
+        keyname_obj = self.customer.get_name() + "_obj"
+        keyname_pin = self.customer.get_name() + "_pin"
         person_key = [keyname_id, keyname_obj, keyname_pin]
         person_value = [cust_id, cust_obj, cust_pin]
         person_dict = dict(zip(person_key, person_value))
@@ -48,11 +48,12 @@ class Bank:
     def get_acct(self, input_acct_num):
     #accepts an account number as input parameter and check if the account number is valid
     #Returns an Account object if the account number is valid otherwise raises a AccountNotFound exception.
-        for info in Customer.get_acct_list:
-            if input_acct_num in info:
-                return info
-            else:
-                raise AccountNotFound()
+        for cust_obj in self.card_list:
+            for acc_obj in cust_obj.owned_by().get_acct_list():
+                if input_acct_num in acc_obj:
+                    return acc_obj
+                else:
+                    raise AccountNotFound()
 
     def get_card_list(self):
         return self.card_list

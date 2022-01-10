@@ -1,13 +1,13 @@
 from Additional_Exceptions import InsufficientFunds
 
 class Account:
-    def __init__(self, acct_type, owner, balance = 0):
+    def __init__(self, acct_type, owner):
 #   account type - protected variable. Values are either 'savings' or 'current'
 #   owner - private variable. A Customer object
 #   balance - private variable. Account balance
         self._acct_type = acct_type
         self.__owner = owner
-        self.__balance = balance
+        self.__balance = 0
 
     def check_balance(self):
         return self.__balance
@@ -53,20 +53,16 @@ class Savings_Account(Account):
     def __init__(self, acc_num, owner, acct_type = "Savings"):
 #   account number - private variable. The account number of the respective account
 #   owner - a Customer object
-        super().__init__(owner, acct_type)
+        super().__init__(acct_type, owner)
         self.__acc_num = acc_num
-        # self._Account__owner = owner
-        # self._acct_type = acct_type 
 
     def get_acc_num(self):
         return self.__acc_num
 
 class Current_Account(Account):
     def __init__(self, acc_num, owner, acct_type = "Current"):
-        super().__init__(owner, acct_type)
+        super().__init__(acct_type, owner)
         self.__acc_num = acc_num
-        # self._Account__owner = owner
-        # self._acct_type = acct_type
-
+        
     def get_acc_num(self):
         return self.__acc_num   

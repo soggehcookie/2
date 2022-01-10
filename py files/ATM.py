@@ -1,4 +1,3 @@
-import Bank
 from ATM_Transaction import Withdrawl, Transfer
 from Additional_Exceptions import InvalidAccount, InvalidATMCard
 
@@ -23,10 +22,10 @@ class ATM:
         #if acct_type in self.__current_card.get_acct_types:
         self.user_obj = self.__current_card.access(acct_type)
         if transaction_type == "withdraw":
-            try:
-                return self.user_obj.Withdrawl(amount).withdrawl(self.user_obj)
-            except:
-                print(f"Withdrawl not successful")
+            # try:
+            return self.user_obj.Withdrawl(amount).withdrawl(self.user_obj)
+            # except:
+            #     print(f"Withdrawl not successful")
 
         elif transaction_type == "transfer":
             #xfer_obj = self.managed_by.get_acct(xfer_acct_num)
@@ -37,11 +36,11 @@ class ATM:
 
     def check_accts(self):
 #   checks if the user has 1 or 2 accounts. Returns True if there is 2 otherwise returns False.
-        for i in self.__current_card.get_acct_types:
-            if i > 1:
-                return True
-            else:
-                return False 
+        # for i in (self.__current_card.get_acct_types()):
+        if len(self.__current_card.get_acct_types()) == 2:
+            return True
+        else:
+            return False 
 
     def check_pin(self, input_pin_num):
 #   accepts a user's pin number and checks with the bank if it is valid. 
@@ -66,4 +65,4 @@ class ATM:
             acc = self.__current_card.access("Savings")
         elif acct_type == "Current":
             acc = self.__current_card.access("Current")
-        return f" Your {acct_type} account has a balance of {acc.check_balance()}"
+        return f"Your {acct_type} account has a balance of ${acc.check_balance()}"

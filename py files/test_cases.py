@@ -38,8 +38,13 @@ bank_01.add_customer(cust_02, "8745")
 #print customer info
 print(cust_01)
 print(dc_01)
+print(save_01.check_balance())
+print(curr_01.check_balance())
+print(cust_01.get_acct_list())
 print()
 print(cust_02)
 print(dc_02)
+print(save_02.check_balance())
+print(cust_02.get_acct_list())
 #start running the ATM using the atm_app function you created in main_app.py
 atm_app(atm_01)

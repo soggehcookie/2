@@ -1,5 +1,5 @@
 class Customer:
-    def __init__(self, name, address, dob, acct_list = []):
+    def __init__(self, name, address, dob):
 #   name - customer's name
 #   address - customer's address
 #   date of birth - customer's date of birth in datetime format (DD-MMM-YYYY)
@@ -7,12 +7,13 @@ class Customer:
         self.__name = name
         self.__address = address
         self.__dob = dob
-        self.__acct_list = acct_list
+        self.acct_list = []
         
 
     def owns(self, account):
-        if account not in self.__acct_list:
-            self.__acct_list.append(account)
+#   owns() - accepts an Account object and adds it to the list. Max 2 accounts either savings and/or current
+        if len(self.acct_list) < 2:
+            self.acct_list.append(account)
 
     def __str__(self):
         return f"Name: {self.__name}, Address: {self.__address}, Date of birth: {self.__dob}"
@@ -21,4 +22,4 @@ class Customer:
         return self.__name
 
     def get_acct_list(self):
-        return self.__acct_list
+        return self.acct_list

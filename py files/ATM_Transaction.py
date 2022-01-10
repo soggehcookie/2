@@ -1,6 +1,4 @@
 import datetime
-import Customer
-import Account
 from abc import ABC, abstractmethod
 
 class ATM_Transaction(ABC):
@@ -32,7 +30,6 @@ class Withdrawl(ATM_Transaction):
 #   Returns the status of the update() function.
         if withdrawl_account in withdrawl_account.get_owner.get_acct_list:
             self.update(withdrawl_account, self._amount)
-        #return f"Your {withdrawl_account.get_type} has a balance of {withdrawl_account.check_balance}"
 
         
     def update(self):
