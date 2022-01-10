@@ -9,7 +9,7 @@ bank_01 = Bank("POSB01", "51 Sunset lane")
 # set up atm object
 atm_01 = ATM("tannery lane 78", bank_01)
 # bank_01 has 1 atm
-bank_01.maintains(atm_01)1
+bank_01.maintains(atm_01)
 # set up customer object.
 # customer 1 has 1 savings acct with 8k and 1 current acct with 5k with
 bank_01

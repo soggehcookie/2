@@ -20,19 +20,18 @@ class ATM:
 #   which has a default value of None via input parameters. Process the requested
 #   transaction according to the transaction type. Returns the status of the respective
 #   transactions or raises an exception indicating whether or not the transactions were successful.
-        if acct_type in self.__current_card.get_acct_types:
-            self.user_obj = self.__current_card.access(acct_type)
+        #if acct_type in self.__current_card.get_acct_types:
+        self.user_obj = self.__current_card.access(acct_type)
         if transaction_type == "withdraw":
             try:
-                Withdrawl.update(self.user_obj, amount)
-                return Withdrawl.withdrawl(self.user_obj)
+                return self.user_obj.Withdrawl(amount).withdrawl(self.user_obj)
             except:
                 print(f"Withdrawl not successful")
 
         elif transaction_type == "transfer":
-            xfer_obj = self.managed_by.get_acct(xfer_acct_num)
+            #xfer_obj = self.managed_by.get_acct(xfer_acct_num)
             if self.user_obj.get_acct_num is not xfer_acct_num:
-                Transfer.update(self.user_obj, amount, xfer_obj)
+                self.user.obj.Transfer(amount).update(self.user_obj, amount)
             else:
                 raise InvalidAccount()
 
@@ -47,7 +46,7 @@ class ATM:
     def check_pin(self, input_pin_num):
 #   accepts a user's pin number and checks with the bank if it is valid. 
 #   Returns the status of the check from the bank.
-        return self.managed_by.authorize_pin(self.user_obj, input_pin_num)
+        return self.managed_by.authorize_pin(self.__current_card.owned_by(), input_pin_num)
 
     def check_card(self, input_card_num):
 #   accepts a ATM card number and checks with the bank if the card is a valid card.
@@ -63,4 +62,8 @@ class ATM:
     def show_balance(self, acct_type):
 #   accepts an Account type and 
 #   returns a string message detailing the current balance of the requested account of that customer
-        return f" Your {acct_type} account has a balance of {self.user_obj.check_balance()}"
+        if acct_type == "Savings":
+            acc = self.__current_card.access("Savings")
+        elif acct_type == "Current":
+            acc = self.__current_card.access("Current")
+        return f" Your {acct_type} account has a balance of {acc.check_balance()}"
