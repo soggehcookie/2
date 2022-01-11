@@ -12,44 +12,48 @@ class ATM_Transaction(ABC):
         self.transaction_id += 1
 
     @abstractmethod
-    def update(self, account, amount, xfer_acct = None):
+    def update(self, account, xfer_acct = None):
 #   accepts the customer's Account object, amount (monetary value) and a transfer
 #   account object (default value is None ) via input parameters. Implementation to be done by the child classes. 
 #   (Hint: @abstractmethod)
         self.account = account
-        self.amount = amount
+        # self.amount = amount
         self.xfer_acct = xfer_acct
 
 class Withdrawl(ATM_Transaction):
     def __init__(self, amount, transaction_type = "withdrawl"):
-        super().__init__(amount)
-        self.transaction_type = transaction_type
+        super().__init__(transaction_type,amount)
+        # self.transaction_type = transaction_type
 
     def withdrawl(self, withdrawl_account):
 #   accepts an Account object and calls the update() function with the appropriate parameters.
 #   Returns the status of the update() function.
         if withdrawl_account in withdrawl_account.get_owner().get_acct_list():
-            return self.update()
+            self.update(withdrawl_account)
+            return True
 
         
-    def update(self):
+    def update(self, account, xfer_acct=None):
 #   function that updates the customer's Account object with the funds to be withdrawn.
 #   Returns the status of the transaction.
-        return self.account.debit(self._amount)
+        super().update(account, xfer_acct)
+        self.account.debit(self._amount)
+        return True
 
 class Transfer(ATM_Transaction):
     def __init__(self, amount, transaction_type = "transfer"):
 #   constructor that initializes the transaction's date & time (timestamp) by using
 #   one of the datatime functions and transaction type set to 'transfer' . The attribute
 #   amount via input parameters
-        super().__init__(amount)
-        self.transaction_type = transaction_type
+        super().__init__(transaction_type, amount)
+        #self.transaction_type = transaction_type
 
-    def update(self):
+    def update(self, account, xfer_acct = None):
 #   function that updates the customer's Account object with funds for the transfer process.
 #   Returns True if successful.
-        if self.xfer_acct in self.xfer_acct.get_owner.get_acct_list:
-            if self.account.get_acct_num is not self.xfer_acct.get_acct_num:
+        super().update(account, xfer_acct)
+        if self.xfer_acct in self.xfer_acct.get_owner().get_acct_list():
+            if self.account.get_acc_num() is not self.xfer_acct.get_acc_num():
                 self.account.debit(self._amount)
                 self.xfer_acct.credit(self._amount)
                 return True

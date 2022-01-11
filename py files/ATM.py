@@ -22,17 +22,20 @@ class ATM:
         #if acct_type in self.__current_card.get_acct_types:
         self.user_obj = self.__current_card.access(acct_type)
         if transaction_type == "withdraw":
-            # try:
-            return Withdrawl(amount).withdrawl(self.user_obj)
-            # except:
-            #     print(f"Withdrawl not successful")
+            try:
+                withdraw_obj = Withdrawl(amount)
+                return withdraw_obj.withdrawl(self.user_obj)
+            except:
+                print(f"Withdrawl not successful")
 
         elif transaction_type == "transfer":
-            #xfer_obj = self.managed_by.get_acct(xfer_acct_num)
-            if self.user_obj.get_acct_num is not xfer_acct_num:
-                self.user.obj.Transfer(amount).update(self.user_obj, amount)
-            else:
-                raise InvalidAccount()
+            # try:
+                #self.user_obj.Transfer(amount).update(self.user_obj, amount)
+            xfer_acct_obj = self.managed_by.get_acct(xfer_acct_num)
+            xfer_obj = Transfer(amount)
+            return xfer_obj.update(self.user_obj, xfer_acct_obj)
+            # except:
+            #     raise InvalidAccount()
 
     def check_accts(self):
 #   checks if the user has 1 or 2 accounts. Returns True if there is 2 otherwise returns False.

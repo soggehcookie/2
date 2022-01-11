@@ -39,20 +39,39 @@ def atm_menu_sys(atm_obj):
             print("Choose Account:\n1.Current Account\n2.Savings Account")
             withdraw_choice = input("Enter an account option: ")
             withdraw_amt = input("Enter amount to withdraw: ")
+            withdraw_amt = float(withdraw_amt)
             if withdraw_choice == "1":
                 atm_obj.transactions("withdraw", withdraw_amt, "Current")
                 print(f"{atm_obj.show_balance('Current')}")
             elif withdraw_choice == "2":
-                atm_obj.transactions("withdraw", withdraw_amt, "Current")
+                atm_obj.transactions("withdraw", withdraw_amt, "Savings")
                 print(f"{atm_obj.show_balance('Savings')}")
         #Transfer funds
-        # elif transact_option == "3":
-        #     print("Choose Account:\n1.Current Account\n2.Savings Account")
-        #     xfer_choice = input("Enter an account option: ")
-        #     xfer_acc = input("Enter the account number to transfer funds to: ")
-        #     xfer_amt = input("Enter the amount to transfer: ")
-        #     if xfer_choice == "1":
-        #         atm_obj.transactions("transfer", xfer_amt, "Current", xfer_acc)
-        #         print(f"Your current account has a balance of {atm_obj.show_balance('Current')}")
+        elif transact_option == "3":
+            print("Choose Account:\n1.Current Account\n2.Savings Account")
+            xfer_choice = input("Enter an account option: ")
+            xfer_acc = input("Enter the account number to transfer funds to: ")
+            xfer_amt = input("Enter the amount to transfer: ")
+            xfer_amt = float(xfer_amt)
+            if xfer_choice == "1":
+                current_count = 1
+                while(current_count <= 3):
+                    atm_obj.transactions("transfer", xfer_amt, "Current", xfer_acc)
+                    if atm_obj.transactions("transfer", xfer_amt, "Current", xfer_acc) == True:
+                        print(f"{atm_obj.show_balance('Current')}")
+                        current_count += 3
+                    else:
+                        print(f"Kindly enter a valid transfer account.\nYou have {3 - current_count} tries left.")
+                        current_count += 1
+            elif xfer_choice == "2":
+                savings_count = 1
+                while(savings_count <= 3):
+                    atm_obj.transactions("transfer", xfer_amt, "Savings", xfer_acc)
+                    if atm_obj.transactions("transfer", xfer_amt, "Savings", xfer_acc) == True:
+                        print(f"{atm_obj.show_balance('Savings')}")
+                        savings_count += 3
+                    else:
+                        print(f"Kindly enter a valid transfer account.\nYou have {3 - savings_count} tries left.")
+                        savings_count += 1
         elif transact_option == "4":
             break
