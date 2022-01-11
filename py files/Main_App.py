@@ -32,7 +32,7 @@ def atm_menu_sys(atm_obj):
                     print(atm_obj.show_balance("Current"))
                     print()
                 else:
-                    print("You do not have a Current account.")
+                    print("You do not have a Current account.\n")
                     sys_menu_running = False
                     atm_app(atm_obj) 
             elif check_choice == "2":                 #default all accounts have savings so no need to check_accts

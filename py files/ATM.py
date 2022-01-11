@@ -1,5 +1,5 @@
 from ATM_Transaction import Withdrawl, Transfer
-from Additional_Exceptions import InvalidAccount, InvalidATMCard
+from Additional_Exceptions import InvalidAccount, InvalidATMCard, InvalidPinNumber
 
 class ATM:
     def __init__(self, atm_location, managed_by, current_card = None):
@@ -56,12 +56,14 @@ class ATM:
 #   accepts a ATM card number and checks with the bank if the card is a valid card.
 #   If it is valid, the current card attribute is set to this ATM card object and returns True
 #   but if the card is invalid, raise an InvalidATMCard exception.
+        check_var = 0
         for l in self.managed_by.get_card_list():
             if input_card_num == l.get_card_num():
+                check_var = 1
                 self.__current_card = l
                 return True
-            else:
-                raise InvalidATMCard()
+        if check_var == 0:
+            raise InvalidATMCard()
 
     def show_balance(self, acct_type):
 #   accepts an Account type and 
