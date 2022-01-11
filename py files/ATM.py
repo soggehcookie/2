@@ -22,17 +22,21 @@ class ATM:
         #if acct_type in self.__current_card.get_acct_types:
         self.user_obj = self.__current_card.access(acct_type)
         if transaction_type == "withdraw":
-            # try:
-            return Withdrawl(amount).withdrawl(self.user_obj)
-            # except:
-            #     print(f"Withdrawl not successful")
+            try:
+                withdraw_obj = Withdrawl(amount)
+                return withdraw_obj.withdrawl(self.user_obj)
+            except:
+                print(f"Withdrawl not successful")
 
         elif transaction_type == "transfer":
-            #xfer_obj = self.managed_by.get_acct(xfer_acct_num)
-            if self.user_obj.get_acct_num is not xfer_acct_num:
-                self.user.obj.Transfer(amount).update(self.user_obj, amount)
-            else:
-                raise InvalidAccount()
+            try:
+                xfer_acct_obj = self.managed_by.get_acct(xfer_acct_num)
+                if self.user_obj is not xfer_acct_obj:
+                    xfer_obj = Transfer(amount)
+                    xfer_obj.update(self.user_obj, xfer_acct_obj)
+                    return True
+            except:
+                 raise InvalidAccount()
 
     def check_accts(self):
 #   checks if the user has 1 or 2 accounts. Returns True if there is 2 otherwise returns False.
@@ -45,7 +49,8 @@ class ATM:
     def check_pin(self, input_pin_num):
 #   accepts a user's pin number and checks with the bank if it is valid. 
 #   Returns the status of the check from the bank.
-        return self.managed_by.authorize_pin(self.__current_card.owned_by(), input_pin_num)
+        self.managed_by.authorize_pin(self.__current_card.owned_by(), input_pin_num)
+        return True
 
     def check_card(self, input_card_num):
 #   accepts a ATM card number and checks with the bank if the card is a valid card.

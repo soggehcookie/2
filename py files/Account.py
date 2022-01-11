@@ -36,7 +36,7 @@ class Account:
 #   accepts an amount, checks it then adds it to the balance.
         if self.__validate_amount(credit_amt) == True:
             self.__balance = self.__balance + credit_amt
-            return self.__balance
+            #return self.__balance
 
     def __validate_amount(self, input_amt):
 #   accepts a monetary amount (be it of type integer or

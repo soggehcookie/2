@@ -2,7 +2,7 @@ import random
 from Additional_Exceptions import InvalidPinNumber, AccountNotFound
 
 class Bank:
-    def __init__(self, code, address, atm_list = [], customer_list = [], card_list = []):
+    def __init__(self, code, address):
 #   code - private variable, a bank code
 #   address - private variable, bank's address
 #   list of ATM - a list of ATM objects
@@ -10,9 +10,9 @@ class Bank:
 #   list of atm cards - a list of ATM_card objects
         self.__code = code
         self.__address = address
-        self.atm_list = atm_list
-        self.customer_list = customer_list
-        self.card_list = card_list
+        self.atm_list = []
+        self.customer_list = []
+        self.card_list = []
 
     def add_customer(self, customer, cust_pin):
         self.customer = customer
@@ -48,9 +48,9 @@ class Bank:
     def get_acct(self, input_acct_num):
     #accepts an account number as input parameter and check if the account number is valid
     #Returns an Account object if the account number is valid otherwise raises a AccountNotFound exception.
-        for cust_obj in self.card_list:
-            for acc_obj in cust_obj.owned_by().get_acct_list():
-                if input_acct_num in acc_obj:
+        for card_obj in self.card_list:
+            for acc_obj in card_obj.owned_by().get_acct_list():
+                if input_acct_num == acc_obj.get_acc_num():
                     return acc_obj
                 else:
                     raise AccountNotFound()
