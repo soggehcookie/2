@@ -78,6 +78,5 @@ def atm_menu_sys(atm_obj):
                     else:
                         print(f"Kindly enter a valid transfer account.\nYou have {3 - savings_count} tries left.")
                         savings_count += 1
-
         elif transact_option == "4":
             return atm_app(atm_obj)
