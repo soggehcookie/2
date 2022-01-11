@@ -52,8 +52,8 @@ class Bank:
             for acc_obj in card_obj.owned_by().get_acct_list():
                 if input_acct_num == acc_obj.get_acc_num():
                     return acc_obj
-                # else:
-                #     raise AccountNotFound()
+                else:
+                    raise AccountNotFound()
 
     def get_card_list(self):
         return self.card_list

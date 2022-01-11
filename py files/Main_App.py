@@ -30,53 +30,82 @@ def atm_menu_sys(atm_obj):
                 if atm_obj.check_accts() == True:
                     atm_obj.show_balance("Current")
                     print(atm_obj.show_balance("Current"))
+                    print()
                 else:
-                    sys_menu_running = False 
-            elif check_choice == "2":
+                    print("You do not have a Current account.")
+                    sys_menu_running = False
+                    atm_app(atm_obj) 
+            elif check_choice == "2":                 #default all accounts have savings so no need to check_accts
                 atm_obj.show_balance("Savings")
                 print(atm_obj.show_balance("Savings"))
+                print()
 
         #Withdraw funds
         elif transact_option == "2":
             print("Choose Account:\n1.Current Account\n2.Savings Account")
-            withdraw_choice = input("Enter an account option: ")
-            withdraw_amt = input("Enter amount to withdraw: ")
-            withdraw_amt = float(withdraw_amt)
+            withdraw_choice = input("Enter an account option: ")            
             if withdraw_choice == "1":
-                atm_obj.transactions("withdraw", withdraw_amt, "Current")
-                print(f"{atm_obj.show_balance('Current')}")
+                withdraw_curr_count = 0
+                while(withdraw_curr_count < 4):
+                    withdraw_curr_amt = input("Enter amount to withdraw: ")
+                    withdraw_curr_amt = float(withdraw_curr_amt)
+                    if atm_obj.transactions("withdraw", withdraw_curr_amt, "Current") == True:
+                        print(f"{atm_obj.show_balance('Current')}\n")
+                        withdraw_curr_count += 4
+                    else:
+                        print(f"Invalid withdrawal amount. Kindly enter a valid withdrawal amount.\nYou have {2 - withdraw_curr_count} tries left\n")
+                        withdraw_curr_count += 1
+                        if withdraw_curr_count == 3:
+                            print("No attempts left, returning to main menu.")
+                            atm_app(atm_obj)
             elif withdraw_choice == "2":
-                atm_obj.transactions("withdraw", withdraw_amt, "Savings")
-                print(f"{atm_obj.show_balance('Savings')}")
+                withdraw_sav_count = 0
+                while(withdraw_sav_count < 4):
+                    withdraw_sav_amt = input("Enter amount to withdraw: ")
+                    withdraw_sav_amt = float(withdraw_sav_amt)
+                    if atm_obj.transactions("withdraw", withdraw_sav_amt, "Savings") == True:
+                        print(f"{atm_obj.show_balance('Savings')}\n")
+                        withdraw_sav_count += 4
+                    else:
+                        print(f"Invalid withdrawal amount. Kindly enter a valid withdrawal amount.\nYou have {2 - withdraw_sav_count} tries left\n")
+                        withdraw_sav_count += 1
+                        if withdraw_sav_count == 3:
+                            print("No attempts left, returning to main menu.")
+                            atm_app(atm_obj)
 
         #Transfer funds
         elif transact_option == "3":
             print("Choose Account:\n1.Current Account\n2.Savings Account")
             xfer_choice = input("Enter an account option: ")
-            #xfer_acc = input("Enter the account number to transfer funds to: ")
-            xfer_amt = input("Enter the amount to transfer: ")
-            xfer_amt = float(xfer_amt)
             if xfer_choice == "1":
-                current_count = 1
-                while(current_count <= 3):
+                current_count = 0
+                while(current_count < 4):
                     xfer_acc_curr = input("Enter the account number to transfer funds to: ")
-                    if atm_obj.transactions("transfer", xfer_amt, "Current", xfer_acc_curr) == True:
+                    xfer_amt_curr = input("Enter the amount to transfer: ")
+                    xfer_amt_curr = float(xfer_amt_curr)
+                    if atm_obj.transactions("transfer", xfer_amt_curr, "Current", xfer_acc_curr) == True:
                         print(f"{atm_obj.show_balance('Current')}")
-                        current_count += 3
+                        current_count += 4
                     else:
-                        print(f"Invalid account. Kindly enter a valid transfer account.\nYou have {3 - current_count} tries left.")
+                        print(f"Invalid account. Kindly enter a valid transfer account.\nYou have {2 - current_count} tries left.")
                         current_count += 1
                         if current_count == 3:
-                            return atm_app(atm_obj)
+                            print("No attempts left, returning to main menu.")
+                            atm_app(atm_obj)
             elif xfer_choice == "2":
-                savings_count = 1
-                while(savings_count <= 3):
+                savings_count = 0
+                while(savings_count < 4):
                     xfer_acc_sav = input("Enter the account number to transfer funds to: ")
-                    if atm_obj.transactions("transfer", xfer_amt, "Savings", xfer_acc_sav) == True:
-                        print(f"{atm_obj.show_balance('Savings')}")
-                        savings_count += 3
+                    xfer_amt_sav = input("Enter the amount to transfer: ")
+                    xfer_amt_sav = float(xfer_amt_sav)
+                    if atm_obj.transactions("transfer", xfer_amt_sav, "Savings", xfer_acc_sav) == True:
+                        print(f"{atm_obj.show_balance('Savings')}\n")
+                        savings_count += 4
                     else:
-                        print(f"Kindly enter a valid transfer account.\nYou have {3 - savings_count} tries left.")
+                        print(f"Invalid account. Kindly enter a valid transfer account.\nYou have {2 - savings_count} tries left.\n")
                         savings_count += 1
+                        if savings_count == 3:
+                            print("No attempts left, returning to main menu.")
+                            atm_app(atm_obj)
         elif transact_option == "4":
-            return atm_app(atm_obj)
+            atm_app(atm_obj)
