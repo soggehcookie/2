@@ -1,17 +1,23 @@
+from Additional_Exceptions import InsufficientFunds, InvalidAccount, InvalidPinNumber, InvalidATMCard, AccountNotFound
 def atm_app(atm_obj):
     while(True):
         print("Available options:\n1. Insert ATM card\n2.Quit simulation")
         option = input("Enter an option: ")
         if option == "1":
             card_num_in = input("Enter an ATM card number: ")
-            if atm_obj.check_card(card_num_in) == False:
-                break   
-            else:
-                pin_num_in = input("Enter your pin number: ")
-                if atm_obj.check_pin(pin_num_in) == False:
-                    break
-                else:
-                    return atm_menu_sys(atm_obj)
+            try:
+                if atm_obj.check_card(card_num_in) == True:
+                    pin_num_in = input("Enter your pin number: ")
+                    try:
+                        if atm_obj.check_pin(pin_num_in) == True:
+                            atm_menu_sys(atm_obj)
+                    except InvalidPinNumber:
+                        print("Invalid pin number.\n")
+                        break
+            except InvalidATMCard:
+                print("Invalid ATM Card number. Kindly take your card.\n")
+                break
+                    
         elif option == "2":
             print("Goodbye")
             break
@@ -83,11 +89,22 @@ def atm_menu_sys(atm_obj):
                     xfer_acc_curr = input("Enter the account number to transfer funds to: ")
                     xfer_amt_curr = input("Enter the amount to transfer: ")
                     xfer_amt_curr = float(xfer_amt_curr)
-                    if atm_obj.transactions("transfer", xfer_amt_curr, "Current", xfer_acc_curr) == True:
-                        print(f"{atm_obj.show_balance('Current')}")
+                    try:
+                        if atm_obj.transactions("transfer", xfer_amt_curr, "Current", xfer_acc_curr) == True:
+                            print(f"{atm_obj.show_balance('Current')}")
+                            current_count += 4
+                    except InsufficientFunds:
+                        print(f"Insufficient funds. Returning to main menu.")
                         current_count += 4
-                    else:
+                        atm_app(atm_obj)
+                    except InvalidAccount:
                         print(f"Invalid account. Kindly enter a valid transfer account.\nYou have {2 - current_count} tries left.")
+                        current_count += 1
+                        if current_count == 3:
+                            print("No attempts left, returning to main menu.")
+                            atm_app(atm_obj)
+                    except AccountNotFound:
+                        print(f"Account not found. Kindly enter a valid transfer account.\nYou have {2 - current_count} tries left.")
                         current_count += 1
                         if current_count == 3:
                             print("No attempts left, returning to main menu.")
@@ -98,11 +115,22 @@ def atm_menu_sys(atm_obj):
                     xfer_acc_sav = input("Enter the account number to transfer funds to: ")
                     xfer_amt_sav = input("Enter the amount to transfer: ")
                     xfer_amt_sav = float(xfer_amt_sav)
-                    if atm_obj.transactions("transfer", xfer_amt_sav, "Savings", xfer_acc_sav) == True:
-                        print(f"{atm_obj.show_balance('Savings')}\n")
+                    try:
+                        if atm_obj.transactions("transfer", xfer_amt_sav, "Savings", xfer_acc_sav) == True:
+                            print(f"{atm_obj.show_balance('Savings')}\n")
+                            savings_count += 4
+                    except InsufficientFunds:
+                        print(f"Insufficient funds. Returning to main menu.")
                         savings_count += 4
-                    else:
-                        print(f"Invalid account. Kindly enter a valid transfer account.\nYou have {2 - savings_count} tries left.\n")
+                        atm_app(atm_obj)
+                    except InvalidAccount:
+                        print(f"Invalid account. Kindly enter a valid transfer account.\nYou have {2 - savings_count} tries left.")
+                        savings_count += 1
+                        if savings_count == 3:
+                            print("No attempts left, returning to main menu.")
+                            atm_app(atm_obj)
+                    except AccountNotFound:
+                        print(f"Account not found. Kindly enter a valid transfer account.\nYou have {2 - savings_count} tries left.")
                         savings_count += 1
                         if savings_count == 3:
                             print("No attempts left, returning to main menu.")

@@ -29,14 +29,15 @@ class ATM:
                 print(f"Withdrawl not successful")
 
         elif transaction_type == "transfer":
-            try:
-                xfer_acct_obj = self.managed_by.get_acct(xfer_acct_num)
-                if self.user_obj is not xfer_acct_obj:
-                    xfer_obj = Transfer(amount)
-                    xfer_obj.update(self.user_obj, xfer_acct_obj)
-                    return True
-            except:
-                 raise InvalidAccount()
+            xfer_acct_obj = self.managed_by.get_acct(xfer_acct_num)
+            if self.user_obj == xfer_acct_obj:
+                raise InvalidAccount()
+
+            else:
+                xfer_obj = Transfer(amount)
+                xfer_obj.update(self.user_obj, xfer_acct_obj)
+                return True
+            
 
     def check_accts(self):
 #   checks if the user has 1 or 2 accounts. Returns True if there is 2 otherwise returns False.

@@ -48,12 +48,14 @@ class Bank:
     def get_acct(self, input_acct_num):
     #accepts an account number as input parameter and check if the account number is valid
     #Returns an Account object if the account number is valid otherwise raises a AccountNotFound exception.
+        check = 0
         for card_obj in self.card_list:
             for acc_obj in card_obj.owned_by().get_acct_list():
                 if input_acct_num == acc_obj.get_acc_num():
+                    check = 1
                     return acc_obj
-                # else:
-                #     raise AccountNotFound()
+        if check == 0:
+            raise AccountNotFound()
 
     def get_card_list(self):
         return self.card_list

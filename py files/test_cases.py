@@ -47,3 +47,132 @@ print(save_02.check_balance())
 print(cust_02.get_acct_list())
 #start running the ATM using the atm_app function you created in main_app.py
 atm_app(atm_01)
+
+#Test Cases:
+#1.Testing invalid pin number
+# Available options:
+# 1. Insert ATM card
+# 2.Quit simulation
+# Enter an option: 1
+# Enter an ATM card number: 589-5955-874-6941
+# Enter your pin number: 545 
+# Invalid pin number.
+
+#2. Testing withdraw more funds than in account
+# Enter a transaction option: 2
+# Choose Account:
+# 1.Current Account
+# 2.Savings Account
+# Enter an account option: 2
+# Enter amount to withdraw: 10000
+# Withdrawl not successful
+# Invalid withdrawal amount. Kindly enter a valid withdrawal amount.
+# You have 2 tries left
+
+# Enter amount to withdraw: 10000
+# Withdrawl not successful
+# Invalid withdrawal amount. Kindly enter a valid withdrawal amount.
+# You have 1 tries left
+
+# Enter amount to withdraw: 10000
+# Withdrawl not successful
+# Invalid withdrawal amount. Kindly enter a valid withdrawal amount.
+# You have 0 tries left
+
+# No attempts left, returning to main menu.
+# Available options:
+# 1. Insert ATM card
+# 2.Quit simulation
+# Enter an option:
+
+#3.Testing transfer of funds to the same account
+# Available options
+# 1. Check balance
+# 2. Withdraw funds
+# 3. Transfer funds
+# 4. Return card
+# Enter a transaction option: 3
+# Choose Account:
+# 1.Current Account
+# 2.Savings Account
+# Enter an account option: 2
+# Enter the account number to transfer funds to: 458-96252
+# Enter the amount to transfer: 500
+# Invalid account. Kindly enter a valid transfer account.
+# You have 2 tries left.
+
+# Enter the account number to transfer funds to: 458-96252
+# Enter the amount to transfer: 500
+# Invalid account. Kindly enter a valid transfer account.
+# You have 1 tries left.
+
+# Enter the account number to transfer funds to: 458-96252
+# Enter the amount to transfer: 500
+# Invalid account. Kindly enter a valid transfer account.
+# You have 0 tries left.
+
+# No attempts left, returning to main menu.
+# Available options:
+# 1. Insert ATM card
+# 2.Quit simulation
+# Enter an option:
+
+#4. Transferring amount that is more than balance in account
+# Available options:
+# 1. Insert ATM card
+# 2.Quit simulation
+# Enter an option: 1
+# Enter an ATM card number: 589-5955-874-6941
+# Enter your pin number: 1234
+# Available options
+# 1. Check balance
+# 2. Withdraw funds
+# 3. Transfer funds
+# 4. Return card
+# Enter a transaction option: 3
+# Choose Account:
+# 1.Current Account
+# 2.Savings Account
+# Enter an account option: 1
+# Enter the account number to transfer funds to: 874-15268
+# Enter the amount to transfer: 10000
+# Insufficient funds. Returning to main menu.
+# Available options:
+# 1. Insert ATM card
+# 2.Quit simulation
+# Enter an option:
+
+# #5. Transferring to non-existent account
+# Available options:
+# 1. Insert ATM card
+# 2.Quit simulation
+# Enter an option: 1
+# Enter an ATM card number: 589-5955-874-6941
+# Enter your pin number: 1234
+# Available options
+# 1. Check balance
+# 2. Withdraw funds
+# 3. Transfer funds
+# 4. Return card
+# Enter a transaction option: 3
+# Choose Account:
+# 1.Current Account
+# 2.Savings Account
+# Enter an account option: 2
+# Enter the account number to transfer funds to: 12345
+# Enter the amount to transfer: 500
+# Account not found. Kindly enter a valid transfer account.
+# You have 2 tries left.
+# Enter the account number to transfer funds to: 12345
+# Enter the amount to transfer: 500
+# Account not found. Kindly enter a valid transfer account.
+# You have 1 tries left.
+# Enter the account number to transfer funds to: 12345
+# Enter the amount to transfer: 500
+# Account not found. Kindly enter a valid transfer account.
+# You have 0 tries left.
+# No attempts left, returning to main menu.
+# Available options:
+# 1. Insert ATM card
+# 2.Quit simulation
+# Enter an option:

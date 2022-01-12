@@ -55,9 +55,9 @@ class Transfer(ATM_Transaction):
         try:
             if self.xfer_acct in self.xfer_acct.get_owner().get_acct_list():
                 if self.account.get_acc_num() is not self.xfer_acct.get_acc_num():
-                    self.account.debit(self._amount)
-                    self.xfer_acct.credit(self._amount)
-                    return True
+                    if self.account.debit(self._amount) == True:
+                        self.xfer_acct.credit(self._amount)
+                        return True
         except AttributeError:
             print("Transfer account is invalid")
 
